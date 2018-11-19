@@ -1,0 +1,38 @@
+import random
+import markovify
+import dominate
+from dominate.tags import *
+import pdfkit
+
+novel = ''
+
+with open("nanogenmo.txt") as f:
+    text = f.read()
+
+text_model = markovify.Text(text)
+
+for i in range(3500):
+    
+    sentence = str(text_model.make_sentence()) + " "
+    novel += sentence.replace("‘", "'")
+    r = random.randint(0,100)
+    
+    if (r < 43):
+        novel += "\n\n"
+
+chunked = novel.split("\n\n")
+
+doc = dominate.document(title='A Swift Novel')
+
+with doc.head:
+    style("body {background-color: #fff; color: #333; font-size: 25pt}")
+    
+with doc:
+    h1("A Swift Novel")
+    p("NaNoGenMo 2018")
+    p("Megan E. Marzzacco")
+    for c in chunked:
+        p(c)
+
+pdfkit.from_string(str(doc.render()), 'A_Swift_Novel.pdf')
+print(doc)
