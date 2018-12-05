@@ -1,0 +1,171 @@
+function setup() {
+  createCanvas(500, 500);
+  background(75);
+  fill(250);
+  strokeWeight(4);
+  stroke(0);
+  ellipse(width/2, height/2, 497, 497);
+  angleMode(DEGREES);
+
+  fill(0, 60, 250);
+  noStroke();
+textFont('Georgia');
+textSize(32);
+text('Jan', 370, 85);
+  
+fill(400, 0, 150);
+textSize(32);
+text('Feb', 424, 171);
+  
+fill(0, 200, 0);
+textSize(32);
+text('Mar', 436, 260);
+  
+fill(0, 200, 300);
+textSize(32);
+text('Apr', 422, 350);
+  
+fill(150, 0, 250); 
+textSize(32);
+text('May', 352, 435);
+  
+fill(255, 204, 0);
+textSize(32);
+text('June', 216, 493);
+  
+fill(0, 0, 209);
+textSize(32);
+text('July', 84, 435);
+  
+fill(400, 35, 0);
+textSize(32);
+text('Aug', 25, 350);
+  
+fill(190, 0, 210);
+textSize(32);
+text('Sept', 2, 260);
+  
+fill(450, 120, 0);
+textSize(32);
+text('Oct', 23, 171);
+  
+fill(0, 125, 0);
+textSize(32);
+text('Nov', 88, 85);
+  
+fill('red')
+textSize(32);
+text('Dec', 225, 28);
+
+}
+
+function draw() {
+  translate(width / 2.0, height / 2.0);
+  textAlign(CENTER, CENTER);
+  strokeCap(SQUARE);
+
+   var date = new Date(),
+    hours = date.getHours(),
+    minutes = date.getMinutes(),
+    seconds = date.getSeconds(),
+    ms = date.getMilliseconds(),
+    i,
+    v,
+    t;
+  
+  // Draw clock
+  fill(175);
+  stroke(0);
+  strokeWeight(4);
+  ellipse(0, 0, 285, 285);
+  
+fill(400)
+noStroke();
+textSize(20);
+textStyle(BOLD);
+text(month(), -30, -40);
+
+fill(400)
+noStroke();
+textSize(20);
+text('/', -15, -40);
+
+fill(400)
+noStroke();
+textSize(20);
+text(day(), -6, -40);
+  
+fill(400)
+noStroke();
+textSize(20);
+text('/', 3, -40);
+  
+fill(400)
+noStroke();
+textSize(20);
+text(year(), 29, -40);
+
+ // Minute Markers
+  fill(0);
+  strokeWeight(1);
+  for (i = 0; i < 60; i++) {
+    v = p5.Vector.fromAngle((i + 1) / 60.0 * TAU - HALF_PI);
+    v.mult(135);
+    if (i % 5 == 4) {
+      ellipse(v.x, v.y, 5, 5);
+    } else {
+      ellipse(v.x, v.y, 1, 1);
+    }
+  }
+  
+    // Numbers
+  textSize(28);
+  fill(0);
+  noStroke();
+  textFont('Helvetica')
+  for (i = 0; i < 12; i++) {
+    v = p5.Vector.fromAngle((i + 1) / 12.0 * TAU - HALF_PI);
+    v.mult(115);
+    text(i + 1, v.x, v.y);
+  }
+
+  // Hour hand
+  stroke(0);
+  strokeWeight(4);
+  t = (hours + minutes / 60 + seconds / 3600) * TAU / 12 - HALF_PI;
+  v = p5.Vector.fromAngle(t);
+  v.mult(85);
+  line(0, 0, v.x, v.y);
+  
+  // Minute hand
+  strokeWeight(2);
+  t = (minutes + seconds / 60 + ms / 1000 / 60) * TAU / 60 - HALF_PI;
+  v = p5.Vector.fromAngle(t);
+  v.mult(130);
+  line(0, 0, v.x, v.y);
+  
+  // Second hand
+  stroke(255, 0, 0);
+  strokeWeight(1);
+  t = (seconds + ms / 1000) * TAU / 60 - HALF_PI;
+  v = p5.Vector.fromAngle(t);
+  v.mult(135);
+  line(0, 0, v.x, v.y);
+  
+
+  // Center cap
+  fill(0);
+  stroke(0);
+  noStroke();
+  ellipse(0, 0, 15, 15);
+
+  
+  stroke(0);
+  t = (millis() / 75);
+  v = p5.Vector.fromAngle(t);
+  v.mult(185);
+	line(0, 0, v.x, v.y);
+
+  resetMatrix();
+  
+}
